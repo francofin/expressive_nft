@@ -2,7 +2,7 @@ require("@nomiclabs/hardhat-waffle");
 
 const projectIdNumber = procesds.env.PROJECTID
 const fs = require('fs');
-const keyData = fs.readFileSync(`../server/config/${process.env.PKEY}`, {
+const keyData = fs.readFileSync(`${process.env.PKEY}`, {
   encoding:'utf8', 
   flag:'r'
 });
