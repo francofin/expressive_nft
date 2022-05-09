@@ -1,0 +1,142 @@
+@use '@assets/scss/scss' as *;
+    .token-sale {
+        max-width: 470px;
+        background: $bg-item-2;
+        border-radius: 20px;
+        padding: 52px 60px 52px 60px;
+        height: 492px;
+        margin-left: auto;
+        margin-top: 40px;
+
+        @include tablet {
+            margin-right: auto;
+        }
+
+        @include mobile {
+            padding: 52px 20px 52px 20px;
+        }
+    }
+    
+    .countdown-container {
+        position: relative;
+        margin-top: 52px;
+        padding-right: 25px;
+        margin-left: -5px;
+        margin-right: -5px;
+
+
+        &__title {
+            font-weight: 400;
+            margin: 1rem auto 2rem;
+            text-align: center;
+        }
+
+        .clock {
+            justify-content: space-between;
+            padding-right: 14px;
+
+            &__display {
+                height: 75px;
+                position: relative;
+                width: 75px;
+            }
+    
+  
+            &__text {
+                text-align: center;
+                .clock__amount {
+                    align-items: center;
+                    display: flex;
+                    flex-direction: column;
+                    height: 100%;
+                    justify-content: center;
+                    position: absolute;
+                    text-align: center;
+                    top: 0;
+                    width: 100%;
+                    font-size: 24px;
+                    font-weight: bold;
+                }
+                .clock__unit {
+                    align-items: center;
+                    display: flex;
+                    flex-direction: column;
+                    height: 100%;
+                    justify-content: center;
+                    position: absolute;
+                    text-align: center;
+                    bottom: -58px;
+                    width: 100%;
+                    font-size: 14px;
+                }
+                
+            }
+            .circle {
+                transform: rotate(-90deg);
+              transform-origin: 50% 50%;
+              transition: stroke-dashoffset .4s cubic-bezier(.4, 0, 0, 1.7);
+            }
+    
+
+        }
+    }
+
+
+
+   
+    
+
+    .tf-progress-bar {
+        margin-top: 63px;
+    }
+
+    .progress {
+        background: transparent;
+        border-radius: 6px;
+        position: relative;
+        margin: 15px 0;
+        padding: 2px;
+        height: 15px;
+        border: 2px solid rgba(255, 255, 255, 0.149);
+    }
+    
+    .progress-done {
+        background: #fff;
+        border-radius: 20px;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 0;
+        opacity: 0;
+        font-size: 0;
+        transition: 1s ease 0.3s;
+    }
+
+
+    .descrip {
+        @include flex(center, space-between);
+        span {
+            font-family: 'Roboto';
+            font-weight: 400;
+            color: #beb1de;
+        }
+        .fs-14 span {
+            padding: 0 4px;
+        }
+        .fs-16 span{
+            padding-left: 4px;
+        }
+    }
+
+    .button-action {
+        margin-top: 40px;
+
+        .style-2.btn-action {
+            padding: 15px 41px;
+        }
+    }
+
+      
+      

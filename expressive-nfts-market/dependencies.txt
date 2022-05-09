@@ -15,3 +15,6 @@ Infura sets up local node development and runs after to mumbai test net. With In
 Prohject Id and enpoint to connect. Needed to connected to hardhat.
 
 https://dev.to/suulola/error-fix-source-openzeppelincontractstokenerc721erc721sol-not-found-file-import-callback-not-supported-5ccb
+
+photo mentions: 
+1. Photo by Marek Piwnicki from Pexels
