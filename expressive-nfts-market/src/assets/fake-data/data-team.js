@@ -1,5 +1,5 @@
 const img1 = '/images/team/team-01.jpg'
-const img2 = '/images/team/team-02.jpg'
+const img2 = '/images/express-team/fj.jpg'
 const img3 = '/images/team/team-03.jpg'
 const img4 = '/images/team/team-04.jpg'
 const img5 = '/images/team/team-05.jpg'
@@ -14,18 +14,18 @@ const img12 = '/images/team/team-12.jpg'
 const dataTeam = [
     {
         img: img1,
-        name:'Mike Anderson',
+        name:'Michael',
         position: 'Founder & CEO'
     },
     {
         img: img2,
-        name:'Paul Harrison',
-        position: 'Founder & CEO'
+        name:'Francois Jack',
+        position: 'CTO & Co-Lead Developer'
     },
     {
         img: img3,
-        name:'Sarah Jenifer',
-        position: 'Founder & CEO'
+        name:'Benjamin',
+        position: 'Co-Lead Developer & CSO'
     },
     {
         img: img4,

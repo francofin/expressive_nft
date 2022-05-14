@@ -1,8 +1,8 @@
 const dataRoadMap = [
     {
-        time: 'February 01, 2022',
-        title: 'Idea Generation',
-        desc: 'Oficia dese runt mollit anim id est labo met conse ctetur adipi smod tempor inc ididunt ut labore et dolore quis',
+        time: 'June 1, 2022',
+        title: 'Website Deployment',
+        desc: 'Get Ready, Expressive Teen Is prepared and ready for the intial launch. The Project Has Come To life.',
         class: 'left'
     },
     {

@@ -1,3 +1,3 @@
-const logo = '/images/logo.png'
+const logo = '/images/et_logo.svg'
 
 export default logo;

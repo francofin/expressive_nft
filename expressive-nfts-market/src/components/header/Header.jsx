@@ -1,13 +1,18 @@
-import React , { useEffect , useState } from 'react';
-import Link from "next/link"
+import React , { useEffect , useState, useContext } from 'react';
+import Link from "next/link";
+import Image from "next/image";
 import menus from "@assets/fake-data/menu";
 import { useRouter } from "next/router";
 import logo from '@assets/fake-data/logo';
 import ButtonOne from '../button/ButtonOne';
+import {fireBaseAuth} from '@utils/firebase';
+import {AuthContext} from "@utils/authContext";
 
 const Header = () => {
 
     const {asPath}  = useRouter();
+    const {state, dispatch} = useContext(AuthContext);
+    const {user} = state;
 
     const [scroll, setScroll] = useState(false);
         useEffect(() => {
@@ -31,17 +36,24 @@ const Header = () => {
     const handleDropdown = index => {
         setActiveIndex(index); 
     };
+    // ${scroll ? 'is-fixed' : ''}
 
     return (
-        <header id="header_main" className={`header js-header ${scroll ? 'is-fixed' : ''}`}>
+        <header id="header_main" className={`header js-header is-fixed`}>
             <div className="container">
                 <div className="row">
                     <div className="col-12">
                         <div className="header__body d-flex justify-content-between">
                             <div className="header__logo">
-                                <Link href="/">
-                                    <img id="site-logo" src={logo}
-                                    alt="Monteno"  />
+                                <Link href="/" passHref>
+                                    <a>
+                                    <Image 
+                                    id="site-logo" 
+                                    src={logo}
+                                    alt="Expressive-Teen"
+                                    width={200}
+                                    height={90}/>
+                                    </a>
                                 </Link>
                             </div>
 
@@ -67,10 +79,16 @@ const Header = () => {
                                                             }
                                                         </ul>
                                                     }
-                                                    
                                                 </li>
                                             ))
+                                            
                                         }
+                                        <li>
+                                        {!user && 
+                                            <Link href='/login' className="btn-action">
+                                                Login
+                                            </Link> }
+                                        </li>
                                     </ul>
                                 </nav>
                                 <div className="button">

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Scrollbar, A11y } from 'swiper';
 
@@ -46,14 +46,14 @@ const Team = (props) => {
                                             <img src={data.img} alt="Monteno" />
                                             <div className="social">
                                                 <p>
-                                                    <Link to="#"><i className="fab fa-facebook-square"></i></Link>
-                                                    <Link to="#"><i className="fab fa-twitter-square"></i></Link>
-                                                    <Link to="#"><i className="fab fa-telegram"></i></Link>
+                                                    <Link href="#"><i className="fab fa-facebook-square"></i></Link>
+                                                    <Link href="#"><i className="fab fa-twitter-square"></i></Link>
+                                                    <Link href="#"><i className="fab fa-telegram"></i></Link>
                                                 </p>
                                             </div>
                                         </div>
                                         <div className="team-info">
-                                            <Link to="/team" className="h5">{data.name}</Link>
+                                            <Link href="/team" className="h5">{data.name}</Link>
                                             <p className="fs-16">{data.position}</p>
                                         </div>
                                     </div>

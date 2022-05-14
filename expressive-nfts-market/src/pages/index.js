@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
-import Header from '@components/header/Header'
-import Footer from '@components/footer/Footer'
+import SEO from "@components/seo";
+import Header from '@components/header/Header';
+import Footer from '@components/footer/Footer';
 import dataCard from '@assets/fake-data/data-card';
 import dataFaq from '@assets/fake-data/data-faq';
 import dataMontono from '@assets/fake-data/data-montono';
@@ -28,16 +29,17 @@ const Home = () => {
     
     return (
         <div>
+            <SEO pageTitle="ExpressIve Teen" />
             <Header />
             <SliderOne />
             <About />
             <Speciality data={dataCard} />
             <Portfolio data={dataPortfolio} />
             <Montono data={dataMontono} />
-            {/* <RoadMap data={dataRoadMap} />
+            <RoadMap data={dataRoadMap} />
             <Newsletter />
             <Team data={dataTeam} />
-            <Partners data={dataPartners} />
+            {/* <Partners data={dataPartners} />
             <Testimonial data={dataTestimonials} />
             <FAQ data={dataFaq} />
             <Action /> */}

@@ -81,6 +81,10 @@ const menus = [
         id: 5,
         name: 'Contact',
         links: '/contact'
+    },{
+        id: 5,
+        name: 'Mint',
+        links: '/create'
     },
     
 ]

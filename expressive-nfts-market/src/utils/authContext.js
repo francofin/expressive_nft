@@ -14,7 +14,7 @@ const firebaseReducer = (state, action) => {
 
 //reducer functions update state
 const initialState = {
-    user: null,
+    user: null
 };
 
 
@@ -22,7 +22,7 @@ const initialState = {
 const AuthContext = createContext();
 
 //context provider
-const AuthProvider = (props) => {
+const AuthProvider = ({children}) => {
     const[state, dispatch] = useReducer(firebaseReducer, initialState);
     
     useEffect(() => {
@@ -43,10 +43,10 @@ const AuthProvider = (props) => {
         })
 
         return () => unsubscribe();
-    }, [])
+    }, []);
 
     const value = {state, dispatch};
-    return <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
+    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
 //export

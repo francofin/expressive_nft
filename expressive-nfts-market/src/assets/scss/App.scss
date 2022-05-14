@@ -22,13 +22,14 @@
   box-sizing: border-box;
 }
 
+// background-image: url('/images/background/bg-body-5.jpg');
 body {
   font-family: 'Roboto';
   font-size: 18px;
   font-weight: 400;
   color: $white;
   padding-top: $header-height;
-  background-image: url('/images/background/bg-body-5.jpg');
+  background-image: url('/images/et_logo.svg');
   background-size: 100%;
   &.home-1 {
       background-image: url('/images/background/bg-element.jpg');

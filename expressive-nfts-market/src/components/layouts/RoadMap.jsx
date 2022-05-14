@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import Link from "next/link";
 
 const RoadMap = (props) => {
 
@@ -34,7 +34,7 @@ const RoadMap = (props) => {
                             }
                         </div>
                         <div className="view-all center" data-aos="fade-up">
-                            <Link to="/road-map" className="btn-action style-2">View Full</Link>
+                            <Link href="/road-map" className="btn-action style-2">View Full</Link>
                         </div>
                     </div>
                 </div>

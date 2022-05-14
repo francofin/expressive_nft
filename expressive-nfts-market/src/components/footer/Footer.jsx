@@ -33,9 +33,7 @@ const Footer = () => {
             <div className="container">
                 <div className="row">
                     <div className="footer__body">
-                      <Link href="/">
-                        <img src={logo} alt="Monteno" data-aos="fade-down" />
-                      </Link>
+                      
                         
                         <p className="desc fs-18" data-aos="fade-up">
                             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occae cat cupidatat non proident, sunt in culpa qui officia dese runt mollit ani 
