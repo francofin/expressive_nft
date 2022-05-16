@@ -11,13 +11,9 @@ export async function getStaticProps() {
 
 const Forget = () => (
     <Wrapper>
-        <SEO pageTitle="Forget Page" />
+        <SEO pageTitle="Forget Password" />
         <Header />
         <main id="main-content">
-            <Breadcrumb
-                pageTitle="Forget Password?"
-                currentPage="Forget Password?"
-            />
             <ForgetPasswordArea />
         </main>
         <Footer />

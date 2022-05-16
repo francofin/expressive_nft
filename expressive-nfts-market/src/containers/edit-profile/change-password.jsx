@@ -1,7 +1,11 @@
 import { useForm } from "react-hook-form";
 import Button from "@ui/button";
 import ErrorText from "@ui/error-text";
+import swal from 'sweetalert';
 import { toast } from "react-toastify";
+import {fireBaseAuth, googleAuthProvider, facebookAuthProvider} from '@utils/firebase';
+import React, {useState, useContext, useEffect} from 'react';
+import { updatePassword, signInWithEmailAndPassword, getIdTokenResult  } from "firebase/auth";
 
 const ChangePassword = () => {
     const {
@@ -13,12 +17,70 @@ const ChangePassword = () => {
     } = useForm({
         mode: "onChange",
     });
-    const notify = () => toast("Your password has changed");
-    const onSubmit = (_data, e) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState(false);
+    const [updatedPassword, setUpdatedPassword] = useState("");
+    const [confirmedUpdatedPassword, setConfirmedUpdatedPassword] = useState("");
+
+
+    const confirmPasswordUpdate = async (e) => {
         e.preventDefault();
-        notify();
-        reset();
-    };
+        setLoading(true);
+        const auth = fireBaseAuth;
+        const email = auth.currentUser.email;
+
+        try{
+            await signInWithEmailAndPassword(auth, email, password)
+            .then( async (result) => {
+              const {user} = result;
+              const idTokenResult = await getIdTokenResult(user);
+              setConfirmPassword(true);
+            });
+      
+          } catch (err){
+            swal({
+              title:"Incorrect details, please review your login Credentials",
+              icon: "error"
+            });
+            setConfirmPassword(false);
+          }
+    
+      }
+
+
+      const handleSumbit = (e) => {
+        e.preventDefault();
+        setLoading(true);
+        const auth = fireBaseAuth;
+        const user = auth.currentUser;
+        const updatedUserPassword = updatedPassword;
+        const confirmedUpdatedUserPassword = confirmedUpdatedPassword;
+        if(updatedUserPassword === confirmedUpdatedUserPassword){
+          updatePassword(user, updatedUserPassword).then(() => {
+              swal({
+                  title:"Password successfully Updated.",
+                  icon: "success"
+                });
+              
+            }).catch((error) => {
+              setLoading(false);
+              swal({
+                  title:"Incorrect details, please review your login Credentials",
+                  icon: "error"
+                });
+            });
+        } else{
+          swal({
+              title:"Please try again the passwords do not match",
+              icon: "error"
+            });
+        }
+        console.log(user)
+  
+  
+    }
     return (
         <div className="nuron-information">
             <div className="condition">
@@ -31,7 +93,7 @@ const ChangePassword = () => {
                 </p>
                 <hr />
             </div>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit}>
                 <div className="email-area">
                     <label htmlFor="Email2" className="form-label">
                         Enter Email
@@ -46,6 +108,7 @@ const ChangePassword = () => {
                                 message: "invalid email address",
                             },
                         })}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     {errors.email && (
                         <ErrorText>{errors.email?.message}</ErrorText>
@@ -63,6 +126,7 @@ const ChangePassword = () => {
                             {...register("oldPass", {
                                 required: "Old Password is required",
                             })}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                         {errors.oldPass && (
                             <ErrorText>{errors.oldPass?.message}</ErrorText>
@@ -79,6 +143,7 @@ const ChangePassword = () => {
                             {...register("NewPass", {
                                 required: "New Password is required",
                             })}
+                            onChange={(e) => setUpdatedPassword(e.target.value)}
                         />
                         {errors.NewPass && (
                             <ErrorText>{errors.NewPass?.message}</ErrorText>
@@ -99,6 +164,7 @@ const ChangePassword = () => {
                                 value === getValues("NewPass") ||
                                 "The passwords do not match",
                         })}
+                        onChange={(e) => setConfirmedUpdatedPassword(e.target.value)}
                     />
                     {errors.rePass && (
                         <ErrorText>{errors.rePass?.message}</ErrorText>

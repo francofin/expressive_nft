@@ -9,8 +9,6 @@ export const USER_INFO =gql`
         userName
         email
         profileTextPargaraph
-        profileTextPargaraph2
-        birthday
         createdAt
         updatedAt
         images {

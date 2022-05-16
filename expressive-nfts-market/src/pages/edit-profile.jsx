@@ -17,17 +17,15 @@ const EditProfile = () => {
     const router = useRouter();
     
     return (
-    <PrivateRouteProvider rest={router}>
+
         <Wrapper>
             <SEO pageTitle="Edit Profile" />
             <Header />
             <main id="main-content">
-                <Breadcrumb pageTitle="Edit Profile" currentPage="Edit Profile" />
                 <EditProfileArea />
             </main>
             <Footer />
         </Wrapper>
-    </PrivateRouteProvider>
     )
 };
 

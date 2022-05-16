@@ -3,13 +3,14 @@ import Link from "next/link"
 import { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import item from '@assets/fake-data/item';
+import { Button, Dropdown, DropdownButton } from "react-bootstrap";
 
 const SliderOne = () => {
 
     const [datatext] = useState({
-        subtitle: 'We are Monteno NFT',
-        title: 'Collect Next Generation NFTs Today',
-        desc: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium'
+        subtitle: 'Welcome to Expressive Teen',
+        title: 'We Are the Next Generation Of NFT Ownership',
+        desc: 'Our Mission is simple. To provide you with the first of a kind Functional NFT experience.'
     })
 
     return (
@@ -21,7 +22,7 @@ const SliderOne = () => {
                             <h6 className="sub-title mb-6" data-aos="fade-up">{datatext.subtitle}</h6>
                             <h2 className="title mb-26" data-aos="fade-up">{datatext.title}</h2>
                             <p className="desc mb-43" data-aos="fade-up">{datatext.desc}</p>
-                            <Link href="/about" className="btn-action style-2" data-aos="fade-up" data-aos-duration="1200" >Get Connected</Link>
+                            <Button className="btn-action" data-aos="fade-up" data-aos-duration="1200" >Become a Member</Button>
                         </div>
                     </div>
                     <div className="col-xl-7 col-md-6 col-12">

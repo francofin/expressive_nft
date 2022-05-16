@@ -39,7 +39,7 @@ const Header = () => {
     // ${scroll ? 'is-fixed' : ''}
 
     return (
-        <header id="header_main" className={`header js-header is-fixed`}>
+        <header id="header_main" className={`header js-header ${scroll ? 'is-fixed' : ''}`}>
             <div className="container">
                 <div className="row">
                     <div className="col-12">
@@ -52,7 +52,10 @@ const Header = () => {
                                     src={logo}
                                     alt="Expressive-Teen"
                                     width={200}
-                                    height={90}/>
+                                    height={90}
+                                    priority
+                                    quality={100}
+                                    />
                                     </a>
                                 </Link>
                             </div>

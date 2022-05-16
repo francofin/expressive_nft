@@ -1,12 +1,35 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState } from "react";
 import Image from "next/image";
+import {PROFILE} from '@utils/queries';
+import {useQuery, useMutation, gql} from '@apollo/client';
+import React, { useState, useMemo, useContext, useEffect } from "react";
+import swal from 'sweetalert';
+import {AuthContext} from "@utils/authContext";
+import omitDeep from 'omit-deep-lodash';
+import {UPDATE_USER} from '@utils/mutations';
+import Resizer from "react-image-file-resizer";
+import axios from 'axios';
 
 const EditProfileImage = () => {
     const [selectedImage, setSelectedImage] = useState({
         profile: "",
         cover: "",
     });
+
+    const {state, dispatch} = useContext(AuthContext);
+
+
+    const [updateUser] = useMutation(UPDATE_USER, {
+        update:({data}) => {
+            console.log('UPDATE MUT', data);
+            swal({
+                title:"Profile Details Updated",
+                icon: "success"
+              });
+        }
+    });
+
+
     const imageChange = (e) => {
         if (e.target.files && e.target.files.length > 0) {
             setSelectedImage((prev) => ({
@@ -16,8 +39,100 @@ const EditProfileImage = () => {
         }
     };
 
+    const [values, setValues] = useState({
+        userName:'',
+        firstName:'',
+        lastName:'',
+        email:'',
+        country:'',
+        profileTextPargaraph:'',
+        images:[]
+    })
+
+    const {
+        userName,
+        firstName,
+        lastName,
+        email,
+        country,
+        profileTextPargaraph,
+        images
+    } = values;
+
+ 
+
+    const [loading, setLoading] = useState(false);
+
+    const {data:userProfile} = useQuery(PROFILE);
+
+    useMemo(() => {
+
+        if (userProfile){
+            setValues({
+                userName:userProfile.profile.userName,
+                firstName:userProfile.profile.firstName,
+                lastName:userProfile.profile.lastName,
+                email:userProfile.profile.email,
+                country:userProfile.profile.country,
+                profileTextPargaraph:userProfile.profile.profileTextPargaraph,
+                images:omitDeep(userProfile.profile.images, ["__typename"])
+            })
+        }
+
+    }, [userProfile]);
+
+    console.log("My Images", images)
+
+    
+
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        updateUser({variables: {input: values}})
+        setLoading(false)
+    }
+
+    const fileResizeAndUpload = (e) => {
+            let fileInput = false;
+            if (e.target.files[0]) {
+                fileInput = true;
+            }
+            if (fileInput) {
+                Resizer.imageFileResizer(
+                e.target.files[0],
+                300,
+                300,
+                "JPEG",
+                100,
+                0,
+                (uri) => {
+                    console.log(uri);
+                    axios.post(`${process.env.NEXT_PUBLIC_CLOUDINARYUPLOAD_ENDPOINT}/uploadimagestoa`, 
+                    {image: uri}, 
+                    {
+                        headers:{
+                            authtoken: state.user.token
+                        }
+                    }).then((res) => {
+                        setLoading(false);
+                        console.log('upload to datab', res)
+                        setValues({images: [...images, res.data]})
+                    }).catch((error) =>{
+                        setLoading(false);
+                        console.log( error);
+                    })
+                },
+                "base64",
+                );
+            } 
+        }
+
     return (
         <div className="nuron-information">
+            <form onSubmit={handleSubmit}>
             <div className="profile-change row g-5">
                 <div className="profile-left col-lg-4">
                     <div className="profile-image mb--30">
@@ -34,7 +149,7 @@ const EditProfileImage = () => {
                             ) : (
                                 <Image
                                     id="rbtinput1"
-                                    src="/images/profile/profile-01.jpg"
+                                    src="/images/userProf/userimg.jpg"
                                     alt="Profile-NFT"
                                     layout="fill"
                                 />
@@ -44,10 +159,10 @@ const EditProfileImage = () => {
                     <div className="button-area">
                         <div className="brows-file-wrapper">
                             <input
-                                name="profile"
                                 id="fatima"
                                 type="file"
-                                onChange={imageChange}
+                                accept="image/*"
+                                onChange={fileResizeAndUpload}
                             />
                             <label htmlFor="fatima" title="No File Choosen">
                                 <span className="text-center color-white">
@@ -73,7 +188,7 @@ const EditProfileImage = () => {
                             ) : (
                                 <Image
                                     id="rbtinput2"
-                                    src="/images/profile/cover-01.jpg"
+                                    src="/images/userProf/userBackground.jpg"
                                     alt="Profile-NFT"
                                     layout="fill"
                                 />
@@ -83,10 +198,11 @@ const EditProfileImage = () => {
                     <div className="button-area">
                         <div className="brows-file-wrapper">
                             <input
-                                name="cover"
                                 id="nipa"
                                 type="file"
-                                onChange={imageChange}
+                                onChange={fileResizeAndUpload}
+                                value={values.image}
+                                accept="image/*"
                             />
                             <label htmlFor="nipa" title="No File Choosen">
                                 <span className="text-center color-white">
@@ -96,7 +212,11 @@ const EditProfileImage = () => {
                         </div>
                     </div>
                 </div>
+                <button className="btn-action" type="submit">
+                    Update Profile Images
+                </button>
             </div>
+            </form>
         </div>
     );
 };

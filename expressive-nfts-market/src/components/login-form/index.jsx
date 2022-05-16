@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import clsx from "clsx";
+import Link from "next/link";
 import swal from 'sweetalert';
 import Button from "@ui/button";
 import { CREATE_USER } from '@utils/mutations';
@@ -36,20 +37,27 @@ const LoginForm = ({ className }) => {
         setLoading(true);
 
         const auth = fireBaseAuth;
+
+        window.localStorage.removeItem('authtoken')
+        window.localStorage.removeItem('autheamil')
         
         try{
           await signInWithEmailAndPassword(auth, email, password)
           .then( async (result) => {
             const {user} = result;
             const idTokenResult = await getIdTokenResult(user);
+            window.localStorage.setItem('authtoken', idTokenResult.token)
+            window.localStorage.setItem('autheamil', user.email)
             dispatch({
               type:'LOGGED_IN_USER',
               payload:{email: user.email, token:idTokenResult.token}
           });
+
+          
     
     
             createUser();
-            router.push('/');
+            router.push('/author');
           });
     
         } catch (err){
@@ -122,6 +130,14 @@ const LoginForm = ({ className }) => {
                     >
                         Remember me leter
                     </label>
+                </div>
+                <div className="mb-1">
+                    <Link
+                    href="/forget"
+                    className="rn-check-box-label"
+                    >
+                        Forgot Password?
+                    </Link>
                 </div>
                 <Button type="submit" size="medium" className="mr--15">
                     Log In

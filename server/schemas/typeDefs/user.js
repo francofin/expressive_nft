@@ -2,6 +2,8 @@ const {gql} = require('apollo-server-express');
 
 module.exports= gql`
 
+    scalar Datetime
+
     type Image {
         url:String
         public_id:String
@@ -19,7 +21,9 @@ module.exports= gql`
         email:String!
         images:[Image]
         profileTextPargaraph:String
-        profileTextPargaraph2: String
+        createdAt: Datetime
+        updatedAt: Datetime
+        country:String
         isPremium: Boolean
         website:[String]
         daysActiveCount: Int
@@ -44,7 +48,7 @@ module.exports= gql`
         lastName:String
         images:[ImageInput]
         profileTextPargaraph:String
-        profileTextPargaraph2: String
+        country:String
         isPremium: Boolean
         website:[String]
     }

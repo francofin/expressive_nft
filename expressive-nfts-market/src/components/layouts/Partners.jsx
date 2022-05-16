@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import Link from "next/link";
 
 const Partners = (props) => {
 
@@ -23,7 +23,7 @@ const Partners = (props) => {
                             {
                                 data.map((data,index) => (
                                     <div key={index} className={`box-partner border-r ${data.border}`}>
-                                        <Link to="#"><img src={data.img} alt="Monteno" /></Link>
+                                        <Link href="#"><img src={data.img} alt="Monteno" /></Link>
                                     </div>
                                 ))
                             }

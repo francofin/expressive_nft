@@ -21,8 +21,8 @@ import {client} from '@utils/apollo-client';
 import {ApolloProvider } from "@apollo/client";
 
 
-const moralisAppId = "Zgi9h3xvYrvXHJZmYjgzbfxlTPnDq6H3RytmW0qt";
-const moralisServerURL = "https://mrnuat16od8z.usemoralis.com:2053/server";
+const moralisAppId = "JpI7JNYYHt6Vlb5As6kkDeYPBXA5u23vdqhNzwys";
+const moralisServerURL = "https://8z4ekyerxqvm.usemoralis.com:2053/server";
 
 // console.log(MyClient)
 const MyApp = ({ Component, pageProps }) => {

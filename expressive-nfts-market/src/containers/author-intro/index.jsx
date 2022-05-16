@@ -1,15 +1,47 @@
-import { useState } from "react";
+import React, { useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import Image from "next/image";
+import {useQuery, useMutation, gql} from '@apollo/client';
 import { ImageType } from "@utils/types";
 import ShareDropdown from "@components/share-dropdown";
 import ShareModal from "@components/modals/share-modal";
 import Anchor from "@ui/anchor";
+import {PROFILE} from '@utils/queries';
 
 const AuthorIntroArea = ({ className, space, data }) => {
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
     const shareModalHandler = () => setIsShareModalOpen((prev) => !prev);
+
+    const [values, setValues] = useState({
+        userName:'',
+        firstName:'',
+        lastName:'',
+        profileTextPargaraph:'',
+        images:[]
+    })
+
+    const [loading, setLoading] = useState(false);
+
+    const {data:userProfile} = useQuery(PROFILE);
+    
+    console.log("Apollo Data", userProfile);
+
+    useMemo(() => {
+        if (userProfile){
+            setValues({
+                userName:userProfile.profile.userName,
+                firstName:userProfile.profile.firstName,
+                lastName:userProfile.profile.lastName,
+                email:userProfile.profile.email,
+                country:userProfile.profile.country,
+                profileTextPargaraph:userProfile.profile.profileTextPargaraph,
+                images:userProfile.profile.images
+            })
+        }
+
+
+    }, [userProfile])
     return (
         <>
             <ShareModal
@@ -53,7 +85,7 @@ const AuthorIntroArea = ({ className, space, data }) => {
                                     )}
 
                                     <div className="rn-author-info-content">
-                                        <h4 className="title">{data.name}</h4>
+                                        <h4 className="title">{values.userName}</h4>
                                         <a
                                             href="https://twitter.com"
                                             target="_blank"
@@ -116,6 +148,18 @@ const AuthorIntroArea = ({ className, space, data }) => {
                                                 <i className="feather feather-edit" />
                                             </Anchor>
                                         </div>
+                                        <section className="tf-section page-title">
+                                            <div className="container">
+                                                <div className="col-md-12">
+                                                    <div>
+                                                        <div className="block-text pt-12">
+                                                            <h2 className="sub-title mb-20">{values.firstName}'s Profile</h2>
+                                                            <p className="fs-24 mb-33" >{values.profileTextPargaraph}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
                                     </div>
                                 </div>
                             </div>

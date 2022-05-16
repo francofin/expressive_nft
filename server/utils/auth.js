@@ -25,12 +25,12 @@ module.exports= {
     authCheckImageMiddleware: (req, res, next) => {
       if(req.headers.authtoken){
         admin.auth().verifyIdToken(req.headers.authtoken)
-        .then(result => {
-          next()
+        .then((result) => {
+          next();
         })
         .catch(error => console.log(error))
-    } else{
-      res.json({error:'Unaouthorized Access'})
+    } else {
+      res.json({error:'Unauthorized Access'})
     }
   },
     authCheck: (req, res) => {

@@ -25,7 +25,6 @@ const SignUp = () => {
             <SEO pageTitle="Sign Up" />
             <Header />
             <main id="main-content">
-                <Breadcrumb pageTitle="Sign Up" currentPage="Sign Up" />
                 <SignUpArea />
             </main>
             <Footer />

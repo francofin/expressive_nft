@@ -29,7 +29,7 @@ email: {
 images:{
     type:Array,
     default:[{
-        url:'https://via.placeholder.com/200x200.png?text=Profile Images',
+        url:'https://via.placeholder.com/200x200.png?text=Profile',
         public_id:`${nanoid()}.${Date.now()}`
     }]
 },
@@ -37,12 +37,7 @@ images:{
 profileTextPargaraph: {
     type: String,
     minlength: 30,
-    maxlength: 500,
-},
-profileTextPargaraph2: {
-    type: String,
-    minlength: 30,
-    maxlength: 500,
+    maxlength: 1000,
 },
 birthday: {
     type: Date,
@@ -54,6 +49,10 @@ daysActive: {
 isPremium: {
     type: Boolean,
     default:false
+},
+country:{
+    type:String,
+    trim:true
 },
 website:[{
     type:String,
