@@ -3,18 +3,20 @@ import NiceSelect from "@ui/nice-select";
 import {PROFILE} from '@utils/queries';
 import {UPDATE_USER} from '@utils/mutations';
 import {useQuery, useMutation, gql} from '@apollo/client';
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useContext, useEffect } from "react";
 import swal from 'sweetalert';
 import omitDeep from 'omit-deep-lodash';
-
+import {AuthContext} from "@utils/authContext";
 
 const PersonalInformation = () => {
+
+    const {state, dispatch} = useContext(AuthContext);
+    const [email, setEmail] = useState('');
 
     const [values, setValues] = useState({
         userName:'',
         firstName:'',
         lastName:'',
-        email:'',
         country:'',
         profileTextPargaraph:'',
         images:[]
@@ -24,7 +26,6 @@ const PersonalInformation = () => {
         userName,
         firstName,
         lastName,
-        email,
         country,
         profileTextPargaraph,
         images
@@ -34,14 +35,16 @@ const PersonalInformation = () => {
 
     const {data:userProfile} = useQuery(PROFILE);
 
-    useMemo(() => {
+
+ 
+
+    useEffect(() => {
 
         if (userProfile){
             setValues({
                 userName:userProfile.profile.userName,
                 firstName:userProfile.profile.firstName,
                 lastName:userProfile.profile.lastName,
-                email:userProfile.profile.email,
                 country:userProfile.profile.country,
                 profileTextPargaraph:userProfile.profile.profileTextPargaraph,
                 images:omitDeep(userProfile.profile.images, ["__typename"])
@@ -50,7 +53,15 @@ const PersonalInformation = () => {
 
     }, [userProfile]);
 
-    console.log("user image", images)
+    useEffect(() => {
+        if(state.user){
+            setEmail(state.user.email)
+        }
+        
+    }, [state.user])
+
+    console.log(email);
+
 
 
     const [updateUser] = useMutation(UPDATE_USER, {
@@ -131,8 +142,7 @@ const PersonalInformation = () => {
                             id="Email"
                             type="email"
                             value={email}
-                            onChange={handleChange}
-                            disabled={loading}
+                            disabled={true}
                         />
                     </div>
                 </div>

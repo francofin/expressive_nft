@@ -8,8 +8,25 @@ import EditProfileImage from "./edit-profile-image";
 import PersonalInformation from "./personal-information";
 import ChangePassword from "./change-password";
 import NotificationSetting from "./notification-setting";
+import {AuthContext} from "@utils/authContext";
+import React, { useState, useMemo, useContext, useEffect } from "react";
 
-const EditProfile = () => (
+const EditProfile = () =>  {
+
+    const {state} = useContext(AuthContext);
+    const [email, setEmail] = useState('');
+
+    useEffect(() => {
+        if(state.user){
+            setEmail(state.user.email)
+        }
+        
+    }, [state.user])
+
+    console.log(email);
+    
+
+    return (
     <div className="edit-profile-area rn-section-gapTop">
         <div className="container">
             <div className="row plr--70 padding-control-edit-wrapper pl_md--0 pr_md--0 pl_sm--0 pr_sm--0">
@@ -72,6 +89,7 @@ const EditProfile = () => (
             </TabContainer>
         </div>
     </div>
-);
+    )
+};
 
 export default EditProfile;

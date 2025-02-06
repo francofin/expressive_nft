@@ -33,7 +33,6 @@ images:{
         public_id:`${nanoid()}.${Date.now()}`
     }]
 },
-
 profileTextPargaraph: {
     type: String,
     minlength: 30,
@@ -58,7 +57,9 @@ website:[{
     type:String,
     trim: true
 }],
-stripeSession:{},
+stripeSession:{
+    
+},
    
 }, {timestamps:true});
 

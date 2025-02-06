@@ -1,6 +1,6 @@
-import React , { useState , useEffect } from 'react'
-import Link from "next/link"
-import logo from '@assets/images/logo-2.png'
+import React , { useState , useEffect } from 'react';
+import Link from "next/link";
+const logo = '@assets/images/port/extn1.jpg';
 
 const FooterStyle2 = () => {
 
@@ -96,10 +96,10 @@ const FooterStyle2 = () => {
                     </div>
                 </div>
             </footer>
-            {
+            {/* {
                 isVisible && 
                 <Link onClick={scrollToTop} href='#' id="scroll-top"></Link>
-            }
+            } */}
         </>
     )
 }

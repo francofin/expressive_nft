@@ -95,46 +95,46 @@ contract ETMarket is ReentrancyGuard {
 
         //function to conduct transactions and market sales.
 
-        function createMarketSale(address nftContract, uint itemId) public payable nonReentrant {
-            uint price = idToMarketToken[itemId].price;
+    function createMarketSale(address nftContract, uint itemId) public payable nonReentrant {
+        uint price = idToMarketToken[itemId].price;
 
-            uint tokenId = idToMarketToken[itemId].tokenId;
+        uint tokenId = idToMarketToken[itemId].tokenId;
 
-            require(msg.value == price, 'Please submit asking price to continue');
+        require(msg.value == price, 'Please submit asking price to continue');
 
 
-            //transfer amount to seller
-            idToMarketToken[itemId].seller.transfer(msg.value);
-            //transfer token from contract address to buyer
-            IERC721(nftContract).transferFrom(address(this), msg.sender, tokenId);
-            idToMarketToken[itemId].owner = payable(msg.sender);
-            idToMarketToken[itemId].sold = true;
+        //transfer amount to seller
+        idToMarketToken[itemId].seller.transfer(msg.value);
+        //transfer token from contract address to buyer
+        IERC721(nftContract).transferFrom(address(this), msg.sender, tokenId);
+        idToMarketToken[itemId].owner = payable(msg.sender);
+        idToMarketToken[itemId].sold = true;
 
-            _tokensSold.increment();
+        _tokensSold.increment();
 
-            payable(owner).transfer(listingPrice);
+        payable(owner).transfer(listingPrice);
 
     }
 //function to fetch market items. for minting, buying and selling, return number of unsold items
 
-function fetchMarketTokens() public view returns(MarketToken[] memory){
-    uint itemsCount = _tokenIds.current();
-    uint unsoldItemCount = _tokenIds.current() - _tokensSold.current();
-    uint currentIndex = 0;
+    function fetchMarketTokens() public view returns(MarketToken[] memory){
+        uint itemsCount = _tokenIds.current();
+        uint unsoldItemCount = _tokenIds.current() - _tokensSold.current();
+        uint currentIndex = 0;
 
-    //grab information for items crreated and items not sold. 
-    //Looping number of items created, if the number has not been sold add to array that shows on the front end. 
-    MarketToken[] memory items = new MarketToken[](unsoldItemCount);
-    for(uint i=0; i<itemsCount; i++) {
-        if(idToMarketToken[i+1].owner == address(0)){
-            uint currentId = i+1;
-            MarketToken storage currentItem = idToMarketToken[currentId];
-            items[currentIndex] = currentItem;
-            currentIndex +=1;
+        //grab information for items crreated and items not sold. 
+        //Looping number of items created, if the number has not been sold add to array that shows on the front end. 
+        MarketToken[] memory items = new MarketToken[](unsoldItemCount);
+        for(uint i=0; i<itemsCount; i++) {
+            if(idToMarketToken[i+1].owner == address(0)){
+                uint currentId = i+1;
+                MarketToken storage currentItem = idToMarketToken[currentId];
+                items[currentIndex] = currentItem;
+                currentIndex +=1;
+            }
         }
+        return items;
     }
-    return items;
-}
 
 //return purchased NFTs
 

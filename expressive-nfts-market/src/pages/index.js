@@ -4,12 +4,11 @@ import Header from '@components/header/Header';
 import Footer from '@components/footer/Footer';
 import dataCard from '@assets/fake-data/data-card';
 import dataFaq from '@assets/fake-data/data-faq';
-import dataMontono from '@assets/fake-data/data-montono';
+import dataExpress from '@assets/expressive-proprietary/data-expressio';
 import dataPartners from '@assets/fake-data/data-partners';
 import dataPortfolio from '@assets/fake-data/data-portfolio';
 import dataRoadMap from '@assets/fake-data/data-roadmap';
 import dataTeam from '@assets/fake-data/data-team';
-import dataTestimonials from '@assets/fake-data/data-testimonials';
 import About from '@components/layouts/About';
 import Action from '@components/layouts/Action';
 import FAQ from '@components/layouts/FAQ';
@@ -20,7 +19,6 @@ import Portfolio from '@components/layouts/Portfolio';
 import RoadMap from '@components/layouts/RoadMap';
 import Speciality from '@components/layouts/Speciality';
 import Team from '@components/layouts/Team';
-import Testimonial from '@components/layouts/Testimonial';
 import SliderOne from '@components/slider/SliderOne';
 
 
@@ -35,14 +33,13 @@ const Home = () => {
             <About />
             <Speciality data={dataCard} />
             <Portfolio data={dataPortfolio} />
-            <Montono data={dataMontono} />
+            <Montono data={dataExpress} />
             <RoadMap data={dataRoadMap} />
             <Newsletter />
             <Team data={dataTeam} />
-            {/* <Partners data={dataPartners} />
-            <Testimonial data={dataTestimonials} />
+            <Partners data={dataPartners} />
             <FAQ data={dataFaq} />
-            <Action /> */}
+            <Action />
             <Footer />
         </div>
     );

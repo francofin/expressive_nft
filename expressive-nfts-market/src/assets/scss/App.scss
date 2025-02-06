@@ -29,8 +29,13 @@ body {
   font-weight: 400;
   color: $white;
   padding-top: $header-height;
-  background-image: url('/images/et_logo.svg');
-  background-size: 100%;
+  // background-color: #2b2a2a;
+  // background: linear-gradient(to left, #333, #333 50%, #eee 75%, #333 75%);
+  // background-image: url('/images/background/bgV2.jpg');
+  // background-image: url('/images/et_logo.svg');
+  background: url('/images/et_logo.svg') no-repeat center fixed;
+  background-size: cover;
+  // background-repeat: no-repeat;
   &.home-1 {
       background-image: url('/images/background/bg-element.jpg');
   }

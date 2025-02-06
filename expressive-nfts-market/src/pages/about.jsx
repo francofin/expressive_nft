@@ -3,8 +3,8 @@ import Image from "next/image";
 import Header from '@components/header/Header';
 import Footer from '@components/footer/Footer';
 import dataPartners from '@assets/fake-data/data-partners';
-import dataPortfolio from '@assets/fake-data/data-portfolio';
-import dataTeam from '@assets/fake-data/data-team';
+import expressivePortfolio from '@assets/expressive-proprietary/expressive-portfolio';
+import dataTeam from '@assets/expressive-proprietary/our-team';
 import About from '@components/layouts/About';
 import Action from '@components/layouts/Action';
 import Counter from '@components/layouts/Counter';
@@ -22,21 +22,20 @@ const AboutUs = () => {
             <section className="tf-section page-title">
                 <div className="container">
                     <div className="col-md-12">
-                        <div className="page-title__body ab">
+                        <div className="page-title__body" style={{height:500}}>
                         <Image 
-                            src="/images/nfts/hills.jpg" 
+                            src="/images/port/extn1.jpg" 
                             alt="Expressive Teen" 
                             width={500}
-                            height={500}
+                            height={700}
                             layout="fill"
                             quality={100}
                             priority
                             objectFit="cover"
                             style={{borderRadius:20}}/>
-                            <div className="block-text pt-12">
-                                <h2 className="sub-title mb-20">About Us</h2>
-                                <p className="fs-24 mb-33" >Sed ut perspiciatis unde omnis iste natus <br /> error sit voluptatem accusantium </p>
-                            </div>
+                            {/* <div className="block-text pt-12">
+                                <h2 className="sub-title mb-20">Expressive Teen</h2>
+                            </div> */}
                             
                         </div>
                     </div>
@@ -44,7 +43,7 @@ const AboutUs = () => {
             </section>
             <About />
             <Counter />
-            <Portfolio data={dataPortfolio} />
+            <Portfolio data={expressivePortfolio} />
             <Team2 data={dataTeam} />
             <Partners data={dataPartners} />
             <Action />

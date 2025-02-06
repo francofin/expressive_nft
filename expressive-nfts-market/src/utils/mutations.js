@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import {USER_INFO} from './fragments';
+import {USER_INFO, NFT_DATA} from './fragments';
 
 export const UPDATE_USER = gql`
     mutation updateUser($input: UpdateUserInput!) {
@@ -18,4 +18,14 @@ export const CREATE_USER = gql`
         email
       }
     }
+`;
+
+
+export const CREATE_NFT = gql`
+    mutation createNFT($input: NFTCreateInput!) {
+      createNFT(input: $input) {
+            ...nftData
+        }
+    }
+    ${NFT_DATA}
 `;

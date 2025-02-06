@@ -298,7 +298,7 @@
         "categories": ["art", "video"],
         "images": [
             {
-                "src": "/images/portfolio/lg/1.jpg"
+                "src": "/images/port/extn1.jpg"
             },
             {
                 "src": "/images/portfolio/lg/2.jpg"
@@ -2578,7 +2578,7 @@
                 "src": "/images/portfolio/lg/5.jpg"
             },
             {
-                "src": "/images/portfolio/lg/1.jpg"
+                "src": "/images/port/extn1.jpg"
             },
             {
                 "src": "/images/portfolio/lg/portfolio-03.jpg"
@@ -3149,7 +3149,7 @@
                 "src": "/images/portfolio/lg/4.jpg"
             },
             {
-                "src": "/images/portfolio/lg/1.jpg"
+                "src": "/images/port/extn1.jpg"
             }
         ],
         "authors": [

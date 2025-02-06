@@ -12,19 +12,19 @@ const Counter = () => {
                                 <div className="number-counter">
                                     <CountUp end={100} />K
                                 </div>
-                                <h5 className="title">Registered User</h5>    
+                                <h5 className="title">Registered Users</h5>    
                             </div>
                             <div className="counter">
                                 <div className="number-counter">
-                                <CountUp end={5} />M
+                                <CountUp end={15000} />
                                 </div>
                                 <h5 className="title">Total Assets</h5>    
                             </div>
                             <div className="counter">
                                 <div className="number-counter">
-                                <CountUp end={10} />B
+                                <CountUp end={2} />
                                 </div>
-                                <h5 className="title">Yearly Trading</h5>    
+                                <h5 className="title">Monthly Droppings</h5>    
                             </div>
                         </div>
                     </div>

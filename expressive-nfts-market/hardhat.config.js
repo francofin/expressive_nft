@@ -1,11 +1,16 @@
 require("@nomiclabs/hardhat-waffle");
 
-const projectIdNumber = procesds.env.PROJECTID
+const projectIdNumber = '15cf2b33e0e64bedb864d913fcda9ae1'
 const fs = require('fs');
-const keyData = fs.readFileSync(`${process.env.PKEY}`, {
-  encoding:'utf8', 
-  flag:'r'
-});
+// const keyData = fs.readFileSync(`${process.env.PKEY}`, {
+//   encoding:'utf8', 
+//   flag:'r'
+// });
+
+console.log("project", projectIdNumber)
+const keyData='f9b573e05d32f42d007a04b4b64232a4c9aeb7245d626f2c2eee74dc8eeb37b7'
+
+console.log(keyData)
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 // task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {

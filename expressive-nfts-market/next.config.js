@@ -1,10 +1,21 @@
-const path = require("path");
+/**
+ * @type {import('next').NextConfig}
+ */
+
+const path = require("path"); 
 
 module.exports = {
     reactStrictMode: true,
     sassOptions: {
         includePaths: [path.join(__dirname, "./src/assets/scss")],
     },
+    typescript: {
+        // !! WARN !!
+        // Dangerously allow production builds to successfully complete even if
+        // your project has type errors.
+        // !! WARN !!
+        ignoreBuildErrors: true,
+      },
     webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
         // eslint-disable-next-line no-param-reassign
         config.ignoreWarnings = [
@@ -22,7 +33,7 @@ module.exports = {
     reactStrictMode: true,
     images: {
       domains:[
-        "http://localhost:4000/uploadimagestoa"
+        "res.cloudinary.com"
       ]
     }
   }

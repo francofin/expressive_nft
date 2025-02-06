@@ -43,7 +43,7 @@ const Team = (props) => {
                                 <SwiperSlide key={index}>
                                     <div className="team-box">
                                         <div className="img-team">
-                                            <img src={data.img} alt="Monteno" />
+                                            <img src={data.img} alt="Expressive Teen" />
                                             <div className="social">
                                                 <p>
                                                     <Link href="#"><i className="fab fa-facebook-square"></i></Link>

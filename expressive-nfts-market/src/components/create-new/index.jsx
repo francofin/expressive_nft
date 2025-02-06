@@ -1,18 +1,138 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState } from "react";
-import PropTypes from "prop-types";
 import clsx from "clsx";
-import { useForm } from "react-hook-form";
+import axios from 'axios';
+import swal from 'sweetalert';
 import Button from "@ui/button";
-import ProductModal from "@components/modals/product-modal";
+import PropTypes from "prop-types";
 import ErrorText from "@ui/error-text";
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import {useRouter} from 'next/router';
+import omitDeep from 'omit-deep-lodash';
+import {CREATE_NFT} from '@utils/mutations';
+import {AuthContext} from "@utils/authContext";
+import Resizer from "react-image-file-resizer";
+import {useQuery, useMutation, gql} from '@apollo/client';
+import ProductModal from "@components/modals/product-modal";
+import React, { useState, useMemo, useContext, useEffect } from "react";
+
+
+const initialState = {
+    description:'',
+    title:'',
+    image:{
+        url:'',
+        public_id:''
+    },
+    attributes:[],
+    price:'',
+    forSale:false,
+    readyToMint:false,
+    uploadToDrawing:true,
+    publish:false,
+    minted:false
+}
 
 const CreateNewArea = ({ className, space }) => {
+
+    const {state, dispatch} = useContext(AuthContext);
     const [showProductModal, setShowProductModal] = useState(false);
-    const [selectedImage, setSelectedImage] = useState();
+    const [selectedImage, setSelectedImage] = useState('');
+
+    const router = useRouter();
     const [hasImageError, setHasImageError] = useState(false);
     const [previewData, setPreviewData] = useState({});
+    const [attr, setAttr] = useState('');
+    const [attributes, setAttributes] = useState([]);
+    const [createNFT] = useMutation(CREATE_NFT, {
+        // update:({data}) => {
+        //     console.log('Create NFT', data);  
+        // },
+        // onError: (err) => console.log(err)
+    })
+
+    const [nftValues, setNFTValues] = useState(initialState);
+
+    const [loading, setLoading] = useState(false);
+
+
+    const addAttribute = () => {
+        if(attributes.length <=4 ) {
+            setAttributes([...attributes, attr]);
+            setAttr('');
+        }
+        else {
+            swal({
+                title:"You have hit the Max capacity of attributes",
+                icon: "info"
+              });
+        }
+    }
+    
+
+    const handleNFTSubmit = async(e) => {
+        e.preventDefault();
+        setLoading(true);
+        setNFTValues({...nftValues, attributes:[attributes]});
+        console.log(nftValues);
+        createNFT({variables: {input: nftValues}});
+        setNFTValues(initialState)
+        setLoading(false);
+        swal({
+            title:"Token Added To Your Profile",
+            icon: "success"
+          });
+
+
+          router.push('/author');
+
+
+    }
+
+    const handleChange = (e) => {
+
+        setNFTValues({...nftValues, [e.target.name]:e.target.value})
+    }
+
+    const fileResizeAndUpload = (e) => {
+        let fileInput = false;
+        if (e.target.files[0]) {
+            fileInput = true;
+        }
+        console.log(e);
+        if (fileInput) {
+            Resizer.imageFileResizer(
+            e.target.files[0],
+            300,
+            300,
+            "JPEG",
+            100,
+            0,
+            (uri) => {
+                console.log(uri);
+                axios.post(`${process.env.NEXT_PUBLIC_CLOUDINARYUPLOAD_ENDPOINT}/uploadimagestoa`, 
+                {image: uri}, 
+                {
+                    headers:{
+                        authtoken: state.user.token
+                    }
+                }).then((res) => {
+                    setLoading(false);
+                    console.log('upload to datab', res)
+                    setSelectedImage(res.data.url)
+                    setNFTValues({...nftValues,image: res.data})
+                }).catch((error) =>{
+                    setLoading(false);
+                    console.log( error);
+                })
+            },
+            "base64",
+            );
+        } 
+    }
+
+
+
 
     const {
         register,
@@ -35,7 +155,7 @@ const CreateNewArea = ({ className, space }) => {
         }
     };
 
-    const onSubmit = (data, e) => {
+    const onNFTSubmit = (data, e) => {
         const { target } = e;
         const submitBtn =
             target.localName === "span" ? target.parentElement : target;
@@ -61,7 +181,7 @@ const CreateNewArea = ({ className, space }) => {
                     className
                 )}
             >
-                <form action="#" onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={handleNFTSubmit}>
                     <div className="container">
                         <div className="row g-5">
                             <div className="col-lg-3 offset-1 ml_md--0 ml_sm--0">
@@ -81,14 +201,12 @@ const CreateNewArea = ({ className, space }) => {
                                             className="inputfile"
                                             data-multiple-caption="{count} files selected"
                                             multiple
-                                            onChange={imageChange}
+                                            onChange={(e) => fileResizeAndUpload(e)}
                                         />
                                         {selectedImage && (
                                             <img
                                                 id="createfileImage"
-                                                src={URL.createObjectURL(
-                                                    selectedImage
-                                                )}
+                                                src={selectedImage}
                                                 alt=""
                                                 data-black-overlay="6"
                                             />
@@ -114,17 +232,18 @@ const CreateNewArea = ({ className, space }) => {
                                 </div>
 
                                 <div className="mt--100 mt_sm--30 mt_md--30 d-none d-lg-block">
-                                    <h5> Note: </h5>
+                                    <h5> Current NFT Attributes </h5>
                                     <span>
                                         {" "}
-                                        Service fee : <strong>2.5%</strong>{" "}
+                                        {attributes.map((emotion) => {
+                                            return (
+                                            <div>
+                                                <strong>{emotion}</strong>{" "}
+                                            </div>
+                                            )
+                                        })}             
                                     </span>{" "}
                                     <br />
-                                    <span>
-                                        {" "}
-                                        You will receive :{" "}
-                                        <strong>25.00 ETH $50,000</strong>
-                                    </span>
                                 </div>
                             </div>
                             <div className="col-lg-7">
@@ -139,12 +258,11 @@ const CreateNewArea = ({ className, space }) => {
                                                     Product Name
                                                 </label>
                                                 <input
-                                                    id="name"
+                                                    name="title"
+                                                    id="title"
+                                                    value={nftValues.title}
                                                     placeholder="e. g. `Digital Awesome Game`"
-                                                    {...register("name", {
-                                                        required:
-                                                            "Name is required",
-                                                    })}
+                                                    onChange={handleChange}
                                                 />
                                                 {errors.name && (
                                                     <ErrorText>
@@ -160,19 +278,15 @@ const CreateNewArea = ({ className, space }) => {
                                                     htmlFor="Discription"
                                                     className="form-label"
                                                 >
-                                                    Discription
+                                                    Description
                                                 </label>
                                                 <textarea
                                                     id="discription"
+                                                    name="description"
                                                     rows="3"
                                                     placeholder="e. g. “After purchasing the product you can get item...”"
-                                                    {...register(
-                                                        "discription",
-                                                        {
-                                                            required:
-                                                                "Discription is required",
-                                                        }
-                                                    )}
+                                                    value={nftValues.description}
+                                                    onChange={handleChange}
                                                 />
                                                 {errors.discription && (
                                                     <ErrorText>
@@ -184,8 +298,9 @@ const CreateNewArea = ({ className, space }) => {
                                                 )}
                                             </div>
                                         </div>
+                                        
 
-                                        <div className="col-md-4">
+                                        <div className="col-md-3">
                                             <div className="input-box pb--20">
                                                 <label
                                                     htmlFor="price"
@@ -195,6 +310,7 @@ const CreateNewArea = ({ className, space }) => {
                                                 </label>
                                                 <input
                                                     id="price"
+                                                    name="price"
                                                     placeholder="e. g. `20$`"
                                                     {...register("price", {
                                                         pattern: {
@@ -205,6 +321,9 @@ const CreateNewArea = ({ className, space }) => {
                                                         required:
                                                             "Price is required",
                                                     })}
+                                                    value={nftValues.price}
+                                                    onChange = {(e) => setNFTValues({...nftValues, price: parseInt(e.target.value)})}
+                                                    disabled={loading}
                                                 />
                                                 {errors.price && (
                                                     <ErrorText>
@@ -214,45 +333,22 @@ const CreateNewArea = ({ className, space }) => {
                                             </div>
                                         </div>
 
-                                        <div className="col-md-4">
-                                            <div className="input-box pb--20">
-                                                <label
-                                                    htmlFor="Size"
-                                                    className="form-label"
-                                                >
-                                                    Size
-                                                </label>
-                                                <input
-                                                    id="size"
-                                                    placeholder="e. g. `Size`"
-                                                    {...register("size", {
-                                                        required:
-                                                            "Size is required",
-                                                    })}
-                                                />
-                                                {errors.size && (
-                                                    <ErrorText>
-                                                        {errors.size?.message}
-                                                    </ErrorText>
-                                                )}
-                                            </div>
-                                        </div>
 
-                                        <div className="col-md-4">
+                                        <div className="col-md-6">
                                             <div className="input-box pb--20">
                                                 <label
                                                     htmlFor="Propertie"
                                                     className="form-label"
                                                 >
-                                                    Properties
+                                                    Attributes
                                                 </label>
                                                 <input
                                                     id="propertiy"
-                                                    placeholder="e. g. `Propertie`"
-                                                    {...register("propertiy", {
-                                                        required:
-                                                            "Propertiy is required",
-                                                    })}
+                                                    name="attribute"
+                                                    placeholder="One Word to Describe Yopur Art"
+                                                    value={attr}
+                                                    onChange={(e) => setAttr(e.target.value)}
+                                                    disabled={loading}
                                                 />
                                                 {errors.propertiy && (
                                                     <ErrorText>
@@ -265,32 +361,14 @@ const CreateNewArea = ({ className, space }) => {
                                             </div>
                                         </div>
 
-                                        <div className="col-md-12">
+                                        <div className="col-md-3" style={{paddingTop:33}}>
                                             <div className="input-box pb--20">
-                                                <label
-                                                    htmlFor="Royality"
-                                                    className="form-label"
-                                                >
-                                                    Royality
-                                                </label>
-                                                <input
-                                                    id="royality"
-                                                    placeholder="e. g. `20%`"
-                                                    {...register("royality", {
-                                                        required:
-                                                            "Royality is required",
-                                                    })}
-                                                />
-                                                {errors.royality && (
-                                                    <ErrorText>
-                                                        {
-                                                            errors.royality
-                                                                ?.message
-                                                        }
-                                                    </ErrorText>
-                                                )}
+                                                <Button onClick={addAttribute} fullwidth style={{height:50}} >
+                                                    Add Attr.
+                                                </Button>
                                             </div>
                                         </div>
+
 
                                         <div className="col-md-4 col-sm-4">
                                             <div className="input-box pb--20 rn-check-box">
@@ -298,6 +376,8 @@ const CreateNewArea = ({ className, space }) => {
                                                     className="rn-check-box-input"
                                                     type="checkbox"
                                                     id="putonsale"
+                                                    onChange = {(e) => setNFTValues({...nftValues, forSale: e.target.checked})}
+                                                    disabled={loading}
                                                 />
                                                 <label
                                                     className="rn-check-box-label"
@@ -314,12 +394,32 @@ const CreateNewArea = ({ className, space }) => {
                                                     className="rn-check-box-input"
                                                     type="checkbox"
                                                     id="instantsaleprice"
+                                                    onChange = {(e) => setNFTValues({...nftValues, readyToMint: e.target.checked})}
+                                                    disabled={loading}
                                                 />
                                                 <label
                                                     className="rn-check-box-label"
                                                     htmlFor="instantsaleprice"
                                                 >
-                                                    Instant Sale Price
+                                                    Mint Token
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-4 col-sm-4">
+                                            <div className="input-box pb--20 rn-check-box">
+                                                <input
+                                                    className="rn-check-box-input"
+                                                    type="checkbox"
+                                                    id="publish"
+                                                    onChange = {(e) => setNFTValues({...nftValues, publish: e.target.checked})}
+                                                    disabled={loading}
+                                                />
+                                                <label
+                                                    className="rn-check-box-label"
+                                                    htmlFor="publish"
+                                                >
+                                                    Publish Art Work
                                                 </label>
                                             </div>
                                         </div>
@@ -330,39 +430,45 @@ const CreateNewArea = ({ className, space }) => {
                                                     className="rn-check-box-input"
                                                     type="checkbox"
                                                     id="unlockpurchased"
+                                                    onChange = {(e) => setNFTValues({...nftValues, uploadToDrawing: e.target.checked})}
+                                                    disabled={loading}
+                                                    checked={nftValues.uploadToDrawing}
                                                 />
                                                 <label
                                                     className="rn-check-box-label"
                                                     htmlFor="unlockpurchased"
                                                 >
-                                                    Unlock Purchased
+                                                    Upload to Profile ArtWork
                                                 </label>
                                             </div>
                                         </div>
-
-                                        <div className="col-md-12 col-xl-4">
+                                    
+                                    <div className="row">
+                                        <div className="col-xl-4 col-md-12 ">
                                             <div className="input-box">
                                                 <Button
                                                     color="primary-alta"
                                                     fullwidth
-                                                    type="submit"
-                                                    data-btn="preview"
-                                                    onClick={handleSubmit(
-                                                        onSubmit
-                                                    )}
+                                                    // type="submit"
+                                                    // data-btn="preview"
+                                                    // onClick={handleSubmit(
+                                                    //     onNFTSubmit
+                                                    // )}
                                                 >
                                                     Preview
                                                 </Button>
                                             </div>
                                         </div>
 
-                                        <div className="col-md-12 col-xl-8 mt_lg--15 mt_md--15 mt_sm--15">
+                                        <div className="col-xl-8 col-md-12 mt_lg--15 mt_md--15 mt_sm--15">
                                             <div className="input-box">
                                                 <Button type="submit" fullwidth>
                                                     Submit Item
                                                 </Button>
                                             </div>
                                         </div>
+                                    </div>
+                                        
                                     </div>
                                 </div>
                             </div>

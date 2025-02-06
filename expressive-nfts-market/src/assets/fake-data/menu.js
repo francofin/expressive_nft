@@ -31,21 +31,6 @@ const menus = [
             },
             {
                 id: 5,
-                sub: 'Blog List',
-                links: '/blog-list'
-            },
-            {
-                id: 6,
-                sub: 'Blog Grid',
-                links: '/blog-grid'
-            },
-            {
-                id: 7,
-                sub: 'Blog Single',
-                links: '/blog-single'
-            },
-            {
-                id: 8,
                 sub: 'FAQ',
                 links: '/faq'
             },
@@ -57,13 +42,14 @@ const menus = [
         links: '/collections'
     },
     {
-        id: 5,
+        id: 4,
         name: 'Contact',
         links: '/contact'
-    },{
-        id: 5,
-        name: 'Mint',
-        links: '/create'
+    },
+    {
+        id: 4,
+        name: 'Artist',
+        links: '/artists'
     },
     
 ]

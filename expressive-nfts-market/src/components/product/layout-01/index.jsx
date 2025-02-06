@@ -44,8 +44,8 @@ const Product = ({
                             <Image
                                 src={image.src}
                                 alt={image?.alt || "NFT_portfolio"}
-                                width={533}
-                                height={533}
+                                width={500}
+                                height={500}
                             />
                         </Anchor>
                     )}
@@ -70,7 +70,7 @@ const Product = ({
                             className="more-author-text"
                             path={`/product/${slug}`}
                         >
-                            {bitCount}+ Place Bit.
+                            {bitCount}+ Place Bid.
                         </Anchor>
                     </div>
                     {!disableShareDropdown && <ShareDropdown />}
@@ -78,7 +78,9 @@ const Product = ({
                 <Anchor path={`/product/${slug}`}>
                     <span className="product-name">{title}</span>
                 </Anchor>
-                <span className="latest-bid">Highest bid {latestBid}</span>
+                <div>
+                <span className="latest-bid"> Highest bid {latestBid}</span>
+                </div>
                 <ProductBid price={price} likeCount={likeCount} />
             </div>
             <PlaceBidModal show={showBidModal} handleModal={handleBidModal} />

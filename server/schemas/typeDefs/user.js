@@ -54,7 +54,7 @@ module.exports= gql`
     }
 
     type Query {
-        profile:User!
+        profile:User
         publicProfile(userName: String!):User!
         allUsers:[User!]
     }
@@ -63,6 +63,7 @@ module.exports= gql`
     type Mutation {
         createUser:CreateUserResponse!
         updateUser(input: UpdateUserInput): User!
+        followUser:User!
     }
 
 

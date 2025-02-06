@@ -9,8 +9,10 @@ describe("ETMarket", function () {
     const Market = await ethers.getContractFactory('ETMarket');
     //abi allow us to interact with the market
     const market = await Market.deploy();
+    console.log("My Market", market);
     await market.deployed();
     const marketAddress = market.address;
+    
 
     //NFT Address
     const NFT = await ethers.getContractFactory('NFT');
@@ -19,7 +21,7 @@ describe("ETMarket", function () {
     const nftContractAddress = nft.address;
 
 
-    //test to get listing and uction price
+    //test to get listing and auction price
     let listingPrice = await market.getListingPrice()
     listingPrice = listingPrice.toString()
 
@@ -27,7 +29,7 @@ describe("ETMarket", function () {
 
 
 
-    //test for Minting
+    //test for Minting, accepts ipfs endpoint
     await nft.mintToken('https-t1')
     await nft.mintToken('https-t2')
 

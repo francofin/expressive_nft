@@ -23,7 +23,7 @@ const Team2 = (props) => {
                             <div key={index} className="col-xl-3 col-md-6">
                                 <div className="team-box-2" data-aos="fade-up" data-aos-duration="800">
                                     <div className="img-team">
-                                        <img src={data.img} alt="Monteno" />
+                                        <img src={data.img} alt="Expressive Teen" />
                                         <div className="social">
                                             <p>
                                                 <Link href="#"><i className="fab fa-facebook-f"></i></Link>
@@ -43,7 +43,7 @@ const Team2 = (props) => {
 
                     
                 </div>
-                <div className="row pb-team">
+                {/* <div className="row pb-team">
                     {
                         data.slice(0,3).map((data,index) =>(
                             <div key={index} className="col-xl-4 col-md-6">
@@ -66,7 +66,7 @@ const Team2 = (props) => {
                             </div>
                         ))
                     }
-                </div>
+                </div> */}
             </div>
         </section>
     );

@@ -1,13 +1,13 @@
-import React, { useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import Image from "next/image";
-import {useQuery, useMutation, gql} from '@apollo/client';
 import { ImageType } from "@utils/types";
 import ShareDropdown from "@components/share-dropdown";
 import ShareModal from "@components/modals/share-modal";
 import Anchor from "@ui/anchor";
 import {PROFILE} from '@utils/queries';
+import {useQuery, useMutation, gql} from '@apollo/client';
+import React, { useState, useMemo, useContext, useEffect } from "react";
 
 const AuthorIntroArea = ({ className, space, data }) => {
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -25,9 +25,9 @@ const AuthorIntroArea = ({ className, space, data }) => {
 
     const {data:userProfile} = useQuery(PROFILE);
     
-    console.log("Apollo Data", userProfile);
+  
 
-    useMemo(() => {
+    useEffect(() => {
         if (userProfile){
             setValues({
                 userName:userProfile.profile.userName,
@@ -42,6 +42,9 @@ const AuthorIntroArea = ({ className, space, data }) => {
 
 
     }, [userProfile])
+
+    console.log("Apollo Data", useQuery(PROFILE));
+
     return (
         <>
             <ShareModal
@@ -50,7 +53,7 @@ const AuthorIntroArea = ({ className, space, data }) => {
             />
             <div className="rn-author-bg-area position-relative ptb--150">
                 <Image
-                    src="/images/userProf/userBackground.jpg"
+                    src={values.images.length !==0 ? values.images[1].url : "/images/userProf/userimg.jpg"}
                     alt="Slider BG"
                     layout="fill"
                     objectFit="cover"
@@ -73,7 +76,7 @@ const AuthorIntroArea = ({ className, space, data }) => {
                                     {data?.image?.src && (
                                         <div className="user-thumbnail">
                                             <Image
-                                                src={data.image.src}
+                                                src={values.images.length !==0 ? values.images[0].url : "/images/userProf/userimg.jpg"}
                                                 alt={
                                                     data.image?.alt || data.name
                                                 }

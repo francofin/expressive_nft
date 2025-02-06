@@ -2,7 +2,7 @@ import React , { useState } from 'react';
 import Link from "next/link"
 import { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import item from '@assets/fake-data/item';
+import item from '@assets/expressive-proprietary/item';
 import { Button, Dropdown, DropdownButton } from "react-bootstrap";
 
 const SliderOne = () => {

@@ -34,10 +34,7 @@ const Footer = () => {
                 <div className="row">
                     <div className="footer__body">
                       
-                        
-                        <p className="desc fs-18" data-aos="fade-up">
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occae cat cupidatat non proident, sunt in culpa qui officia dese runt mollit ani 
-                        </p>
+
                         <ul className="social">
                             <li data-aos="fade-up" data-aos-duration="1000"><Link href="#"><i className="fab fa-facebook-f"></i></Link></li>
                             <li data-aos="fade-up" data-aos-duration="1200"><Link href="#"><i className="fab fa-twitter"></i></Link></li>
@@ -46,7 +43,7 @@ const Footer = () => {
                         </ul>
                     </div>
                     <div className="footer_bottom">
-                        <p className="fs-16">Copyright © 2022, Monteno - NFT Portfolio ReactJS Template. Designed by <Link href="https://themeforest.net/user/themesflat/portfolio">Themesflat</Link></p>
+                        <p className="fs-16">Copyright © 2022, Expressive Teen - NFT Experience</p>
                         <ul>
                             <li><Link href="#">Terms & Condition</Link></li>
                             <li><Link href="#">Privacy Policy</Link></li>

@@ -11,6 +11,7 @@ export const USER_INFO =gql`
         profileTextPargaraph
         createdAt
         updatedAt
+        country
         images {
             url
             public_id
@@ -19,4 +20,24 @@ export const USER_INFO =gql`
 `
 
 
-export default USER_INFO;
+export const NFT_DATA = gql`
+    fragment nftData on NFT {
+        _id
+        title
+        description
+        image {
+            url
+            public_id
+        }
+        attributes
+        price
+        forSale
+        readyToMint
+        publish
+        minted
+        artist {
+            _id
+            userName
+        }
+    }
+`;

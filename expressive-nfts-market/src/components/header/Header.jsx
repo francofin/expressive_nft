@@ -1,7 +1,7 @@
 import React , { useEffect , useState, useContext } from 'react';
 import Link from "next/link";
 import Image from "next/image";
-import menus from "@assets/fake-data/menu";
+import menus from "@assets/expressive-proprietary/menu";
 import { useRouter } from "next/router";
 import logo from '@assets/fake-data/logo';
 import ButtonOne from '../button/ButtonOne';

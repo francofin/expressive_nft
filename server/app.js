@@ -29,7 +29,7 @@ app.use(helmet.xssFilter());
 
 app.use(cors());
 
-console.log("Cloudinary consoled", cloudinary);
+// console.log("Cloudinary consoled", cloudinary);
 
 
 app.use(morgan('combined'));

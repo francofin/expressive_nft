@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tab, Tabs, TabList, TabPanel  } from 'react-tabs';
-import { Accordion } from 'react-bootstrap-accordion'
+import Accordion from 'react-bootstrap/Accordion';
 
 const FAQ2 = (props) => {
 

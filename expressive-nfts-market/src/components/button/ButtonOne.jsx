@@ -40,13 +40,13 @@ const ButtonOne = () => {
             // variant="secondary"
             menuVariant="dark"
             title="User Profile"
-            className="mt-4"
+            className="menu-item menu-item-has-children"
           >
-              <Dropdown.Item href="/author" active style={{fontSize:15}}>
+              <Dropdown.Item href="/author" active style={{fontSize:15}} className="menu-item">
                 Profile
               </Dropdown.Item>
-              <Dropdown.Item href="#/action-2" style={{fontSize:15}}>Another action</Dropdown.Item>
-              <Dropdown.Item href="#/action-3" style={{fontSize:15}}>Something else</Dropdown.Item>
+              <Dropdown.Item href="/upload-art" style={{fontSize:15}} className="menu-item">Upload Art Work</Dropdown.Item>
+              <Dropdown.Item href="/create" style={{fontSize:15}} className="menu-item">Mint NFT</Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item style={{fontSize:15}} className="btn-action" onClick={logout}> Sign Out</Dropdown.Item>
         </DropdownButton>

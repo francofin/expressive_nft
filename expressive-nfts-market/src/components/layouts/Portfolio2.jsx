@@ -41,37 +41,6 @@ const Portfolio2 = (props) => {
 
                 </Swiper>
 
-                <Swiper
-                    modules={[ Autoplay ]}
-                    spaceBetween={30}
-                    breakpoints={{
-                        0: {
-                            slidesPerView: 1,
-                          },
-                        767: {
-                          slidesPerView: 2,
-                        },
-                        991: {
-                          slidesPerView: 5,
-                        },
-                    }}
-                    autoplay={{
-                        delay: 1,
-                        disableOnInteraction: false,
-                        pauseOnMouseEnter: true,
-                        reverseDirection: true,
-                    }}
-                    speed= {2000}
-                >
-
-                    {
-                        data.map((data,index) => (
-                            <SwiperSlide key={index}><div className="item bg-2"><img src={data.img} alt="Monteno" /></div></SwiperSlide>
-                        ))
-                    }
-
-                </Swiper>
-
             </div>
             
             

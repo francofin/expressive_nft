@@ -26,7 +26,8 @@ const EditProfileImage = () => {
                 title:"Profile Details Updated",
                 icon: "success"
               });
-        }
+        },
+        onError: (err) => console.log(err.graphQLError[0].message)
     });
 
 
@@ -65,7 +66,7 @@ const EditProfileImage = () => {
 
     const {data:userProfile} = useQuery(PROFILE);
 
-    useMemo(() => {
+    useEffect(() => {
 
         if (userProfile){
             setValues({
@@ -91,15 +92,16 @@ const EditProfileImage = () => {
         e.preventDefault();
         setLoading(true);
 
-        updateUser({variables: {input: values}})
-        setLoading(false)
+        updateUser({variables: {input: values}});
+        setLoading(false);
     }
 
-    const fileResizeAndUpload = (e) => {
+    const fileResizeAndUpload = (e, location) => {
             let fileInput = false;
             if (e.target.files[0]) {
                 fileInput = true;
             }
+            console.log(e);
             if (fileInput) {
                 Resizer.imageFileResizer(
                 e.target.files[0],
@@ -119,6 +121,11 @@ const EditProfileImage = () => {
                     }).then((res) => {
                         setLoading(false);
                         console.log('upload to datab', res)
+                        if(location === "profile"){
+                            setSelectedImage({...selectedImage, profile:res.data.url})
+                        } else if (location === "cover"){
+                            setSelectedImage({...selectedImage, cover:res.data.url})
+                        }
                         setValues({images: [...images, res.data]})
                     }).catch((error) =>{
                         setLoading(false);
@@ -140,16 +147,15 @@ const EditProfileImage = () => {
                         <div className="img-wrap">
                             {selectedImage?.profile ? (
                                 <img
-                                    src={URL.createObjectURL(
-                                        selectedImage.profile
-                                    )}
+                                    
+                                    src={selectedImage.profile}
                                     alt=""
                                     data-black-overlay="6"
                                 />
                             ) : (
                                 <Image
                                     id="rbtinput1"
-                                    src="/images/userProf/userimg.jpg"
+                                    src= {images.length !==0 ? images[0].url : "/images/userProf/userimg.jpg"}
                                     alt="Profile-NFT"
                                     layout="fill"
                                 />
@@ -160,9 +166,10 @@ const EditProfileImage = () => {
                         <div className="brows-file-wrapper">
                             <input
                                 id="fatima"
+                                name="profile"
                                 type="file"
                                 accept="image/*"
-                                onChange={fileResizeAndUpload}
+                                onChange={(e) => fileResizeAndUpload(e, "profile")}
                             />
                             <label htmlFor="fatima" title="No File Choosen">
                                 <span className="text-center color-white">
@@ -179,16 +186,14 @@ const EditProfileImage = () => {
                         <div className="img-wrap">
                             {selectedImage?.cover ? (
                                 <img
-                                    src={URL.createObjectURL(
-                                        selectedImage.cover
-                                    )}
+                                    src={selectedImage.cover}
                                     alt=""
                                     data-black-overlay="6"
                                 />
                             ) : (
                                 <Image
                                     id="rbtinput2"
-                                    src="/images/userProf/userBackground.jpg"
+                                    src={images.length > 1 ? images[1].url : "/images/userProf/userBackground.jpg"}
                                     alt="Profile-NFT"
                                     layout="fill"
                                 />
@@ -200,7 +205,7 @@ const EditProfileImage = () => {
                             <input
                                 id="nipa"
                                 type="file"
-                                onChange={fileResizeAndUpload}
+                                onChange={(e) => fileResizeAndUpload(e, "cover")}
                                 value={values.image}
                                 accept="image/*"
                             />
